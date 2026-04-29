@@ -1,8 +1,8 @@
 import { Tabs } from 'expo-router';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import React from 'react';
 
 import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
@@ -15,19 +15,35 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarButton: HapticTab,
+        tabBarLabelStyle: {
+          fontSize: 12,
+        },
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          href: null,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="home"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: '홈',
+          tabBarIcon: ({ color, size }) => <MaterialIcons size={size} name="home-filled" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="saved"
+        options={{
+          title: '저장',
+          tabBarIcon: ({ color, size }) => <MaterialIcons size={size} name="bookmark" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: '마이',
+          tabBarIcon: ({ color, size }) => <MaterialIcons size={size} name="person" color={color} />,
         }}
       />
     </Tabs>
