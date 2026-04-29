@@ -53,3 +53,41 @@
 - 앱이 Expo에서 실행됩니다.
 - TypeScript 오류가 없습니다.
 - 눈에 띄는 내비게이션 깨짐이 없습니다.
+
+## Git Commit Message Convention
+
+- commit을 할 때는 header에 [type] description을 작성하고, 본문에는 적절한 내용을 작성합니다. description과 본문은 기술키워드, 도구명등 영어로 표현해야하는 것은 영어로 표현하고 나머지는 한국어로 작성합니다.
+- type 작성법
+  - feat: 새로운 기능에 대한 commit
+  - fix: bug 수정에 대한 commit
+  - hotfix: hotfix bug 수정에 대한 commit
+  - chore: 그 외 자잘한 수정에 대한 commit. 예, version 변경 등.
+  - refactor: code refactoring에 대한 commit
+  - perf: 성능 개선에 대한 commit
+
+## Project Version Convention
+
+- version의 최초 시작은 1.0.0으로 정합니다.
+- minor version 변경인 경우 마지막 숫자를 하나 올립니다.
+- hotfix version 변경인 경우 가운데 숫자를 하나 올리고, 마지막 숫자를 0으로 변경합니다.
+- major version 변경인 경우 첫번째 숫자를 하나 올리고, 가운데와 마지막 숫자를 0으로 변경합니다.
+
+## Git Strategy
+
+- branch는 master, dev, master-dev를 기본으로 합니다.
+- 일반 작업인 경우
+  - 작업이 필요한 경우 dev branch에서 feature/"작업명" branch를 생성하고 그 branch에서 작업하고 commit합니다. commit할 때는 Git Commit Message Convention을 참고합니다.
+  - 또 다른 작업이 필요한 경우 dev branch에서 feature/"또다른작업명" branch를 생성하고 그 branch에서 작업하고 commit합니다.
+  - 작업이 완료된 경우 dev branch에서 release branch를 생성하고 완료된 작업 branch들을 release branch에 merge합니다.
+  - release branch에서 검수를 하고 이상이 있는 경우 해당 작업 branch로 checkout 후 작업합니다. 그리고 다시 release branch에 merge하고 검수를 합니다.
+  - 검수 후 이상이 없다면 package.json의 version을 변경하고 commit합니다. version명은 Project Version Convention을 참고합니다.
+  - version 변경 후 release branch를 master-dev branch에 merge하고 최종적으로 검수합니다. 이상이 있는 경우 해당 작업branch로 checkout하고 재작업을 합니다.
+  - master-dev branch에서 검수 후 이상이 없다면 release branch를 dev branch와 master branch에 merge합니다.
+  - master-dev, dev, master branch 각각 origin으로 push합니다.
+  - master branch에 version명으로 tag를 하고 tag역시 origin으로 push합니다.
+- hotfix 작업
+  - hotfix 작업이 필요한 경우 master branch에서 hotfix/"핫픽스작업명" branch를 생성하고 작업하고 commit합니다.
+  - hotfix 브랜치를 master-dev 브랜치에 merge 하고 검수합니다. 검수 이상이 있는 경우 해당 branch로 돌아가 재작업을 합니다.
+  - 이상이 없는 경우 해당 작업 branch에서 package.json의 version을 변경합니다.
+  - version 변경 후, 해당 작업 branch를 master, dev branch에 merge 하고 master, dev, master-dev branch를 origin에 push합니다.
+  - master branch에 version명으로 tag를 하고 tag역시 origin으로 push합니다.
